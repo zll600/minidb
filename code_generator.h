@@ -1,5 +1,5 @@
-#ifndef MINIDB_CODEGENERATOR_H
-#define MINIDB_CODEGENERATOR_H
+#ifndef MINIDB_CODEGENERATOR_H_
+#define MINIDB_CODEGENERATOR_H_
 
 #include "parser.h"
 #include "table.h"
@@ -13,4 +13,4 @@ ExecuteResult execute_select(Statement *statement, Table *table);
 
 // void print_row(Row *row);
 
-#endif // MINIDB_CODEGENERATOR_H
+#endif // MINIDB_CODEGENERATOR_H_

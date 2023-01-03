@@ -1,5 +1,5 @@
-#ifndef MINIDB_PARSER_H
-#define MINIDB_PARSER_H
+#ifndef MINIDB_PARSER_H_
+#define MINIDB_PARSER_H_
 
 #include "repl.h"
 
@@ -25,4 +25,4 @@ typedef struct {
 PrepareResult prepare_statement(InputBuffer *input_buffer,
                                 Statement *statement);
 
-#endif // MINIDB_PARSER_H
+#endif // MINIDB_PARSER_H_

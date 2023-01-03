@@ -3,11 +3,10 @@
 #include <stdio.h>
 
 #include "row.h"
-
-extern const uint32_t TABLE_MAX_ROWS;
+#include "table.h"
 
 static void print_row(Row *row) {
-    printf("(%d %s %s\n", row->id, row->username, row->email);
+    printf("(%d %s %s)\n", row->id, row->username, row->email);
 }
 
 ExecuteResult execute_statement(Statement *statement, Table *table) {

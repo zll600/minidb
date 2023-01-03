@@ -3,13 +3,11 @@
 
 #include <stdint.h>
 
-#include "row.h"
-
-// 4kb per page
-const uint32_t PAGE_SIZE = 4096;
 #define TABLE_MAX_PAGE 100
-const uint32_t ROWS_PER_PAGE = PAGE_SIZE / ROW_SIZE;
-const uint32_t TABLE_MAX_ROWS = ROWS_PER_PAGE * TABLE_MAX_PAGE;
+// 4kb per page
+#define PAGE_SIZE 4096
+#define ROWS_PER_PAGE (PAGE_SIZE / ROW_SIZE)
+#define TABLE_MAX_ROWS (ROWS_PER_PAGE * TABLE_MAX_PAGE)
 
 typedef struct {
     uint32_t num_rows;
