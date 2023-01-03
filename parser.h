@@ -7,6 +7,8 @@
 
 typedef enum {
     PREPARE_SUCCESS,
+    PREPARE_NEGATIVE_ID,
+    PREPARE_STRING_TOO_LONG,
     PREPARE_UNRECOGNIZED_STATEMENT,
     PREPARE_SYNTAX_ERROR,
 } PrepareResult;
@@ -24,5 +26,6 @@ typedef struct {
 
 PrepareResult prepare_statement(InputBuffer *input_buffer,
                                 Statement *statement);
+PrepareResult prepare_insert(InputBuffer *input_buffer, Statement *statement);
 
 #endif // MINIDB_PARSER_H_

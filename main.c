@@ -31,6 +31,13 @@ int main(int argc, char *argv[]) {
         Statement statement;
         switch (prepare_statement(input_buffer, &statement)) {
         case (PREPARE_SUCCESS):
+            printf("Insert Successfully.");
+            break;
+        case (PREPARE_NEGATIVE_ID):
+            printf("Can't insert record with negative id.");
+            break;
+        case (PREPARE_STRING_TOO_LONG):
+            printf("This record has a too big field.");
             break;
         case (PREPARE_SYNTAX_ERROR):
             printf("Syntax error. Couldn't parse this statement.\n");
