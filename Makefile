@@ -1,10 +1,11 @@
-objects = main.o repl.o tokenizer.o parser.o code_generator.o
+objects = main.o repl.o tokenizer.o parser.o code_generator.o table.o row.o
+CFLAGS = -Wall -fcommon
 
 minidb : $(objects) 
-	clang -o minidb ${objects}
+	clang ${CFLAGS} -o minidb ${objects}
 
-main.o : main.c repl.h 
-	clang -c main.c
+main.o : main.c repl.h parser.h table.h tokenizer.h code_generator.h
+	clang ${CFLAGS} -c main.c
 
 repl.o : repl.c repl.h 
 	clang -c repl.c
@@ -12,12 +13,18 @@ repl.o : repl.c repl.h
 tokenizer.o : tokenizer.c tokenizer.h
 	clang -c tokenizer.c
 
-parser.o : parser.c parser.h
-	clang -c parser.c
+parser.o : parser.c parser.h row.h
+	clang ${CFLAGS} -c parser.c
 
-code_generator.o : code_generator.c code_generator.h
-	clang -c code_generator.c
+code_generator.o : code_generator.c code_generator.h table.h
+	clang ${FLAGS} -c code_generator.c
+
+table.o : table.c table.h row.h
+	clang -c table.c
+
+row.o : row.c row.h
+	clang -c row.c
 
 .PHONY : clean
 clean :
-	-rm minidb ${objects}
+	-rm -f minidb ${objects}

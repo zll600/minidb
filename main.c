@@ -5,9 +5,11 @@
 #include "code_generator.h"
 #include "parser.h"
 #include "repl.h"
+#include "table.h"
 #include "tokenizer.h"
 
 int main(int argc, char *argv[]) {
+    Table *table = new_table();
     InputBuffer *input_buffer = new_input_buffer();
     while (true) {
         print_prompt();
@@ -30,13 +32,23 @@ int main(int argc, char *argv[]) {
         switch (prepare_statement(input_buffer, &statement)) {
         case (PREPARE_SUCCESS):
             break;
+        case (PREPARE_SYNTAX_ERROR):
+            printf("Syntax error. Couldn't parse this statement.\n");
+            continue;
         case (PREPARE_UNRECOGNIZED_STATEMENT):
             printf("Unrecongized keyword at start of %s \n",
                    input_buffer->buffer);
         }
 
-        execute_statement(&statement);
-        printf("Executed.\n");
+        // execute_statement(&statement, table);
+        switch (execute_statement(&statement, table)) {
+        case (EXECUTE_SUCCESS):
+            printf("Executed.\n");
+            break;
+        case (EXECUTE_TABLE_FULL):
+            printf("Error: table is full.\n");
+            break;
+        }
     }
     return 0;
 }

@@ -3,9 +3,12 @@
 
 #include "repl.h"
 
+#include "row.h"
+
 typedef enum {
     PREPARE_SUCCESS,
     PREPARE_UNRECOGNIZED_STATEMENT,
+    PREPARE_SYNTAX_ERROR,
 } PrepareResult;
 
 typedef enum {
@@ -15,6 +18,8 @@ typedef enum {
 
 typedef struct {
     StatementType type;
+    // only used by insert statement
+    Row row_to_insert;
 } Statement;
 
 PrepareResult prepare_statement(InputBuffer *input_buffer,
