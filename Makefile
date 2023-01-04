@@ -1,4 +1,4 @@
-objects = main.o repl.o tokenizer.o parser.o code_generator.o table.o row.o pager.o
+objects = main.o repl.o tokenizer.o parser.o code_generator.o table.o row.o pager.o cursor.o
 CFLAGS = -Wall -fcommon
 
 minidb : $(objects) 
@@ -27,6 +27,9 @@ row.o : row.c row.h
 
 pager.o : pager.c pager.h
 	clang -c pager.c
+
+cursor.o : cursor.c cursor.h
+	clang -c cursor.c
 
 .PHONY : clean
 clean :

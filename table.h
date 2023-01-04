@@ -10,9 +10,6 @@ typedef struct {
     Pager *pager;
 } Table;
 
-// figure out where to read/write in memory for a particular row
-void *row_slot(Table *talbe, uint32_t row_num);
-
 // opening database file.
 // initializing a pager data structure.
 // initializing a table data structure.
