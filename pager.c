@@ -13,7 +13,7 @@ Pager *pager_open(const char *filename) {
     // S_IRUSR user read permission
 
     // O_RDWR is enough for open system call.
-    int fd = open(filename, O_RDWR | O_CREAT | S_IWUSR | S_IRUSR);
+    int fd = open(filename, (O_RDWR | O_CREAT | S_IWUSR | S_IRUSR) & (~O_EXCL));
     // int fd = open(filename, O_RDWR | S_IWUSR | S_IRUSR);
     if (fd == -1) {
         printf("Unable to open file\n");
