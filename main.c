@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
         case (PREPARE_UNRECOGNIZED_STATEMENT):
             printf("Unrecongized keyword at start of %s \n",
                    input_buffer->buffer);
+            continue;
         }
 
         // execute_statement(&statement, table);
