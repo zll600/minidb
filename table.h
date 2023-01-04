@@ -6,7 +6,8 @@
 #include "pager.h"
 
 typedef struct {
-    uint32_t num_rows;
+    // root page of this table.
+    uint32_t root_page_num;
     Pager *pager;
 } Table;
 

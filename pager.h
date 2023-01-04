@@ -8,6 +8,8 @@
 typedef struct {
     int file_descriptor;
     uint32_t file_length;
+	// number of pages in use by minidb
+	uint32_t num_pages;
     void *pages[TABLE_MAX_PAGES];
 } Pager;
 
@@ -23,7 +25,7 @@ Pager *pager_open(const char *filename);
 // this method handles cache miss.
 void *get_page(Pager *pager, uint32_t page_num);
 
-// take both page number and size.
-void pager_flush(Pager *pager, int page_num, int size);
+// one page can has free space
+void pager_flush(Pager *pager, int page_num);
 
 #endif // MINIDB_PAGER_H_

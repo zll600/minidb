@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
         Statement statement;
         switch (prepare_statement(input_buffer, &statement)) {
         case (PREPARE_SUCCESS):
-            printf("Insert Successfully.\n");
+            printf("Prepare statment Successfully.\n");
             break;
         case (PREPARE_NEGATIVE_ID):
             printf("Can't insert record with negative id.\n");

@@ -5,10 +5,12 @@
 
 #include "table.h"
 
+// represent a position in the table.
 typedef struct {
     Table *table;
-    // a location in a table.
-    uint32_t row_num;
+	// locate one record by page_num + cell_num
+	uint32_t page_num;
+	uint32_t cell_num;
     // indicates a position one past the last element.
     bool end_of_file;
 } Cursor;

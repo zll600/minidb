@@ -11,14 +11,6 @@ typedef struct {
     char email[COLUMN_EMAIL_SIZE + 1];
 } Row;
 
-extern const uint32_t ID_SIZE;
-extern const uint32_t USERNAME_SIZE;
-extern const uint32_t EMAIL_SIZE;
-extern const uint32_t ID_OFFSET;
-extern const uint32_t USERNAME_OFFSET;
-extern const uint32_t EMAIL_OFFSET;
-extern const uint32_t ROW_SIZE;
-
 void serialize_row(Row *source, void *destination);
 void deserialize_row(void *source, Row *destination);
 
