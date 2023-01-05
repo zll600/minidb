@@ -1,11 +1,15 @@
 #ifndef MINIDB_CODEGENERATOR_H_
 #define MINIDB_CODEGENERATOR_H_
 
+#include "cursor.h"
 #include "parser.h"
 #include "table.h"
-#include "cursor.h"
 
-typedef enum { EXECUTE_SUCCESS, EXECUTE_TABLE_FULL } ExecuteResult;
+typedef enum {
+    EXECUTE_SUCCESS,
+    EXECUTE_TABLE_FULL,
+    EXECUTE_DUPLICATE_KEY
+} ExecuteResult;
 
 void leaf_node_insert(Cursor *cursor, uint32_t key, Row *value);
 

@@ -26,12 +26,12 @@ Pager *pager_open(const char *filename) {
     Pager *pager = (Pager *)malloc(sizeof(Pager));
     pager->file_descriptor = fd;
     pager->file_length = file_length;
-	pager->num_pages = file_length / PAGE_SIZE;
-	
-	if (file_length % PAGE_SIZE != 0) {
-		printf("Db file is not a whold number of pages. Corrupt file.\n");
-		exit(EXIT_FAILURE);
-	}
+    pager->num_pages = file_length / PAGE_SIZE;
+
+    if (file_length % PAGE_SIZE != 0) {
+        printf("Db file is not a whold number of pages. Corrupt file.\n");
+        exit(EXIT_FAILURE);
+    }
 
     for (uint32_t i = 0; i < TABLE_MAX_PAGES; i++) {
         pager->pages[i] = NULL;
@@ -62,10 +62,10 @@ void *get_page(Pager *pager, uint32_t page_num) {
             }
         }
         pager->pages[page_num] = page;
-		
-		if (page_num >= pager->num_pages) {
-		    pager->num_pages = page_num + 1;
-		}
+
+        if (page_num >= pager->num_pages) {
+            pager->num_pages = page_num + 1;
+        }
     }
     return pager->pages[page_num];
 }

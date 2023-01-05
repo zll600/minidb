@@ -60,6 +60,9 @@ int main(int argc, char *argv[]) {
         case (EXECUTE_SUCCESS):
             printf("Executed.\n");
             break;
+        case (EXECUTE_DUPLICATE_KEY):
+            printf("Error: insert duplicate key.\n");
+            break;
         case (EXECUTE_TABLE_FULL):
             printf("Error: table is full.\n");
             break;
