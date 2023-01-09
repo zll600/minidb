@@ -31,6 +31,8 @@ Cursor *table_find(Table *table, uint32_t key);
 // - the position of last key.
 Cursor *leaf_node_find(Table *table, uint32_t page_num, uint32_t key);
 
+Cursor *internal_node_find(Table *table, uint32_t page_num, uint32_t key);
+
 // figure out where to read/write in memory for a particular row
 void *cursor_value(Cursor *cursor);
 
