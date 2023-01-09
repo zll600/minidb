@@ -43,9 +43,13 @@
  * a cell is a key/value pair
  */
 #define LEAF_NODE_NUM_CELLS_SIZE sizeof(uint32_t)
-#define LEAF_NODE_NUM_CELL_OFFSET COMMON_NODE_HEADER_SIZE
+#define LEAF_NODE_NUM_CELLS_OFFSET COMMON_NODE_HEADER_SIZE
+#define LEAF_NODE_NEXT_LEAF_SIZE sizeof(uint32_t)
+#define LEAF_NODE_NEXT_LEAF_OFFSET                                             \
+    (LEAF_NODE_NUM_CELLS_OFFSET + LEAF_NODE_NUM_CELLS_SIZE)
 #define LEAF_NODE_HEADER_SIZE                                                  \
-    (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE)
+    (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE +                      \
+     LEAF_NODE_NEXT_LEAF_SIZE)
 
 /*
  * Leaft Node Body Layout

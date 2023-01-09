@@ -43,6 +43,8 @@ void leaf_node_split_and_insert(Cursor *cursor, uint32_t key, Row *value) {
     uint32_t new_page_num = get_unused_page_num(cursor->table->pager);
     void *new_node = get_page(cursor->table->pager, new_page_num);
     initialize_leaf_node(new_node);
+    *leaf_node_next_leaf(new_node) = *leaf_node_next_leaf(old_node);
+    *leaf_node_next_leaf(old_node) = new_page_num;
 
     /*
     all existsing keys plus new key should be divided evenly between old(left)
@@ -62,6 +64,9 @@ void leaf_node_split_and_insert(Cursor *cursor, uint32_t key, Row *value) {
 
         if (cell_num == cursor->cell_num) {
             serialize_row(value, destination);
+            serialize_row(value,
+                          leaf_node_value(destination_node, index_within_node));
+            *leaf_node_key(destination_node, index_within_node) = key;
         } else if (cell_num > cursor->cell_num) {
             memcpy(destination, leaf_node_cell(old_node, cell_num - 1),
                    LEAF_NODE_CELL_SIZE);
