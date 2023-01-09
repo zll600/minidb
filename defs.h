@@ -44,7 +44,8 @@
  */
 #define LEAF_NODE_NUM_CELLS_SIZE sizeof(uint32_t)
 #define LEAF_NODE_NUM_CELL_OFFSET COMMON_NODE_HEADER_SIZE
-#define LEAF_NODE_HEADER_SIZE (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE)
+#define LEAF_NODE_HEADER_SIZE                                                  \
+    (COMMON_NODE_HEADER_SIZE + LEAF_NODE_NUM_CELLS_SIZE)
 
 /*
  * Leaft Node Body Layout
@@ -56,5 +57,34 @@
 #define LEAF_NODE_CELL_SIZE (LEAF_NODE_KEY_SIZE + LEAF_NODE_VALUE_SIZE)
 #define LEAF_NODE_SPACE_FOR_CELLS (PAGE_SIZE - LEAF_NODE_HEADER_SIZE)
 #define LEAF_NODE_MAX_CELLS (LEAF_NODE_SPACE_FOR_CELLS / LEAF_NODE_CELL_SIZE)
+
+/*
+ * leaf node size
+ * to keep the tree balanced, we evenly distribute cells between the two new
+ * nodes.
+ */
+#define LEAF_NODE_RIGHT_SPLIT_COUNT ((LEAF_NODE_MAX_CELLS + 1) / 2)
+#define LEAF_NODE_LEFT_SPLIT_COUNT                                             \
+    ((LEAF_NODE_MAX_CELLS + 1) - LEAF_NODE_RIGHT_SPLIT_COUNT)
+
+/*
+ * Internal Node Header Layout
+ */
+#define INTERNAL_NODE_NUM_KEYS_SIZE sizeof(uint32_t)
+#define INTERNAL_NODE_NUM_KEYS_OFFSET COMMON_NODE_HEADER_SIZE
+#define INTERNAL_NODE_RIGHT_CHILD_SIZE sizeof(uint32_t)
+#define INTERNAL_NODE_RIGHT_CHILD_OFFSET                                       \
+    (INTERNAL_NODE_NUM_KEYS_OFFSET + INTERNAL_NODE_NUM_KEYS_SIZE)
+#define INTERNAL_NODE_HEADER_SIZE                                              \
+    (COMMON_NODE_HEADER_SIZE + INTERNAL_NODE_NUM_KEYS_SIZE +                   \
+     INTERNAL_NODE_RIGHT_CHILD_SIZE)
+
+/*
+ * Internal Node Body Layout
+ */
+#define INTERNAL_NODE_KEY_SIZE sizeof(uint32_t)
+#define INTERNAL_NODE_CHILD_SIZE sizeof(uint32_t)
+#define INTERNAL_NODE_CELL_SIZE                                                \
+    (INTERNAL_NODE_CHILD_SIZE + INTERNAL_NODE_KEY_SIZE)
 
 #endif // MINIDB_DEFS_H_

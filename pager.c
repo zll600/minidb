@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "btree.h"
+
 Pager *pager_open(const char *filename) {
     // O_RDWR read/write mode
     // O_CREAT create file if it doesn't exists.
@@ -13,7 +15,7 @@ Pager *pager_open(const char *filename) {
     // S_IRUSR user read permission
 
     // O_RDWR is enough for open system call.
-    int fd = open(filename, O_CREAT | O_RDWR | S_IWUSR | S_IRUSR);
+    int fd = open(filename, (O_RDWR | O_CREAT | S_IRUSR | S_IWUSR) & (~O_EXCL));
     // int fd = open(filename, O_RDWR | S_IWUSR | S_IRUSR);
     if (fd == -1) {
         printf("Unable to open file\n");
@@ -88,5 +90,44 @@ void pager_flush(Pager *pager, int page_num) {
     if (bytes_written == -1) {
         printf("Error writting: %d.\n", errno);
         exit(EXIT_FAILURE);
+    }
+}
+
+uint32_t get_unused_page_num(Pager *pager) { return pager->num_pages; }
+
+void indent(uint32_t level) {
+    for (uint32_t i = 0; i < level; i++) {
+        printf("  ");
+    }
+}
+
+void print_tree(Pager *pager, uint32_t page_num, uint32_t indentation_level) {
+    void *node = get_page(pager, page_num);
+    uint32_t num_keys, child;
+
+    switch (get_node_type(node)) {
+    case (NODE_LEAF):
+        num_keys = *leaf_node_num_cells(node);
+        indent(indentation_level);
+        printf("- leaf (size %d)\n", num_keys);
+        for (uint32_t i = 0; i < num_keys; i++) {
+            indent(indentation_level + 1);
+            printf("- %d\n", *leaf_node_key(node, i));
+        }
+        break;
+    case (NODE_INTERNAL):
+        num_keys = *internal_node_num_keys(node);
+        indent(indentation_level);
+        printf("- internal (size %d)\n", num_keys);
+        for (uint32_t i = 0; i < num_keys; i++) {
+            child = *internal_node_child(node, i);
+            print_tree(pager, child, indentation_level + 1);
+
+            indent(indentation_level + 1);
+            printf("- key %d\n", *internal_node_key(node, i));
+        }
+        child = *internal_node_right_child(node);
+        print_tree(pager, child, indentation_level + 1);
+        break;
     }
 }

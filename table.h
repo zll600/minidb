@@ -21,4 +21,7 @@ Table *db_open(const char *filename);
 // frees the memory for the Pager and Table data structure.
 void db_close(Table *table);
 
+// create new root to store left child and right child
+void create_new_root(Table *table, uint32_t right_child_page_num);
+
 #endif // MINIDB_TABLE_H_

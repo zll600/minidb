@@ -12,6 +12,7 @@ typedef enum {
 } ExecuteResult;
 
 void leaf_node_insert(Cursor *cursor, uint32_t key, Row *value);
+void leaf_node_split_and_insert(Cursor *cursor, uint32_t key, Row *value);
 
 ExecuteResult execute_statement(Statement *statement, Table *table);
 

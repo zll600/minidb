@@ -8,8 +8,8 @@
 typedef struct {
     int file_descriptor;
     uint32_t file_length;
-	// number of pages in use by minidb
-	uint32_t num_pages;
+    // number of pages in use by minidb
+    uint32_t num_pages;
     void *pages[TABLE_MAX_PAGES];
 } Pager;
 
@@ -27,5 +27,13 @@ void *get_page(Pager *pager, uint32_t page_num);
 
 // one page can has free space
 void pager_flush(Pager *pager, int page_num);
+
+/*
+until we start recycling free pages, new pages will always go onto the end of
+the database file.
+*/
+uint32_t get_unused_page_num(Pager *pager);
+
+void print_tree(Pager *pager, uint32_t page_num, uint32_t indentation_level);
 
 #endif // MINIDB_PAGER_H_
